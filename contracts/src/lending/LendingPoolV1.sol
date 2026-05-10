@@ -47,6 +47,7 @@ contract LendingPoolV1 is Initializable, UUPSUpgradeable, OwnableUpgradeable, Re
 
     event AssetConfigured(address indexed asset, address indexed feed, uint256 ltvBps, bool enabled);
     event Deposited(address indexed user, address indexed asset, uint256 amount);
+    event Withdrawn(address indexed user, address indexed asset, uint256 amount);
     event Borrowed(address indexed user, address indexed asset, uint256 amount, uint256 tokenId);
     event Repaid(address indexed user, address indexed asset, uint256 amount);
     event Liquidated(
@@ -123,6 +124,23 @@ contract LendingPoolV1 is Initializable, UUPSUpgradeable, OwnableUpgradeable, Re
         IERC20(asset).safeTransfer(msg.sender, amount);
 
         emit Borrowed(msg.sender, asset, amount, tokenId);
+    }
+
+    function withdrawCollateral(address asset, uint256 amount) external nonReentrant {
+        _requireEnabled(asset);
+        require(amount > 0, "Zero amount");
+
+        Position storage position = _positions[msg.sender][asset];
+        require(position.collateral >= amount, "Insufficient collateral");
+
+        position.collateral -= amount;
+        totalDeposits[asset] -= amount;
+
+        require(healthFactor(msg.sender) >= WAD, "Health factor too low");
+
+        IERC20(asset).safeTransfer(msg.sender, amount);
+
+        emit Withdrawn(msg.sender, asset, amount);
     }
 
     function repay(address asset, uint256 amount) external nonReentrant returns (uint256 repaid) {

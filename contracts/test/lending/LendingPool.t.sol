@@ -104,6 +104,17 @@ contract LendingPoolTest is Test {
         assertEq(positionNFT.ownerOf(tokenId), borrower);
     }
 
+    function testWithdrawCollateral() public {
+        _depositWeth(borrower, 5e18);
+
+        vm.prank(borrower);
+        pool.withdrawCollateral(address(weth), 2e18);
+
+        (uint256 collateral,,,) = pool.positionOf(borrower, address(weth));
+        assertEq(collateral, 3e18);
+        assertEq(weth.balanceOf(borrower), 97e18);
+    }
+
     function testBorrowTransfersAssetToBorrower() public {
         _seedUsdcLiquidity(100_000e18);
         _depositWeth(borrower, 10e18);
