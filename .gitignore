@@ -1,0 +1,31 @@
+# Foundry
+contracts/cache/
+contracts/out/
+contracts/broadcast/
+contracts/lcov.info
+contracts/coverage-html/
+
+# Node
+node_modules/
+frontend/node_modules/
+subgraph/node_modules/
+frontend/build/
+frontend/.next/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
