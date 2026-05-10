@@ -29,3 +29,6 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Local project instructions
+BChT2_Implementation_Plan.md
