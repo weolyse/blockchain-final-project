@@ -27,9 +27,9 @@ forge install OpenZeppelin/openzeppelin-contracts-upgradeable
 forge install smartcontractkit/chainlink-brownie-contracts
 forge install transmissions11/solmate          # optional, for math helpers
 ```
-- [ ] Pin all lib versions in `foundry.toml` → `[profile.default]` with explicit remappings.
-- [ ] Set `solc = "0.8.24"` and `optimizer = true, runs = 200` in `foundry.toml`.
-- [ ] Confirm `forge build` exits 0.
+- [x] Pin all lib versions in `foundry.toml` → `[profile.default]` with explicit remappings.
+- [x] Set `solc = "0.8.24"` and `optimizer = true, runs = 200` in `foundry.toml`.
+- [x] Confirm `forge build` exits 0.
 
 ### 0.3 Frontend Scaffold
 ```bash
@@ -39,7 +39,7 @@ cd frontend
 npm install ethers@6 wagmi viem @rainbow-me/rainbowkit
 npm install @tanstack/react-query
 ```
-- [ ] Confirm `npm run build` exits 0.
+- [x] Confirm `npm run build` exits 0.
 
 ### 0.4 The Graph Scaffold
 ```bash
@@ -49,7 +49,7 @@ npm install -g @graphprotocol/graph-cli
 graph init --product hosted-service --from-contract <placeholder_address> \
   --network arbitrum-sepolia defi-super-app
 ```
-- [ ] Placeholder `subgraph.yaml` committed.
+- [x] Placeholder `subgraph.yaml` committed.
 
 ### 0.5 GitHub Actions CI
 Create `.github/workflows/ci.yml`:
@@ -78,7 +78,7 @@ jobs:
       - run: cd frontend && npm ci && npm run build
       - run: cd frontend && npx prettier --check "src/**/*.{ts,tsx}"
 ```
-- [ ] `slither.config.json` created with `detectors_to_exclude` list (start empty).
+- [x] `slither.config.json` created with `detectors_to_exclude` list (start empty).
 - [ ] First CI push → confirm both jobs go green before writing any contract logic.
 
 ### 0.6 Pre-commit Hooks
@@ -135,25 +135,25 @@ contract GovToken is ERC20Votes, ERC20Permit, AccessControl {
         returns (uint256) { return super.nonces(owner); }
 }
 ```
-- [ ] Written and compiling.
+- [x] Written and compiling.
 
 ### 1.2 LP Token — `LPToken.sol`
 **File:** `contracts/src/tokens/LPToken.sol`
 - ERC-20, minted/burned only by `AMM_ROLE`
 - Uses `AccessControl`
-- [ ] Written and compiling.
+- [x] Written and compiling.
 
 ### 1.3 NFT Receipt — `PositionNFT.sol`
 **File:** `contracts/src/tokens/PositionNFT.sol`
 - ERC-721, minted by lending pool to represent borrow positions
 - tokenURI returns on-chain SVG or IPFS placeholder
 - `MINTER_ROLE` gated
-- [ ] Written and compiling.
+- [x] Written and compiling.
 
 ### 1.4 Unit Tests — `test/tokens/`
-- [ ] `GovToken.t.sol` — mint, transfer, delegate, permit, max supply revert (≥10 tests)
-- [ ] `LPToken.t.sol` — mint/burn role check, transfer (≥5 tests)
-- [ ] `PositionNFT.t.sol` — mint, ownerOf, role revert (≥5 tests)
+- [x] `GovToken.t.sol` — mint, transfer, delegate, permit, max supply revert (≥10 tests)
+- [x] `LPToken.t.sol` — mint/burn role check, transfer (≥5 tests)
+- [x] `PositionNFT.t.sol` — mint, ownerOf, role revert (≥5 tests)
 - [ ] Commit: `feat(tokens): ERC20Votes governance token, LP token, position NFT`
 
 ---
@@ -197,13 +197,13 @@ function getAmountOutAssembly(uint256 rIn, uint256 rOut, uint256 aIn)
 - Include a `getAmountOutSolidity` equivalent for benchmarking.
 
 **Security checklist for this contract:**
-- [ ] `nonReentrant` on `swap`, `addLiquidity`, `removeLiquidity`
-- [ ] `SafeERC20.safeTransferFrom` for all token movements
-- [ ] CEI pattern: all state writes before external calls
-- [ ] Slippage: revert if output < `minAmountOut`
-- [ ] Minimum liquidity lock (1000 wei) on first `addLiquidity`
+- [x] `nonReentrant` on `swap`, `addLiquidity`, `removeLiquidity`
+- [x] `SafeERC20.safeTransferFrom` for all token movements
+- [x] CEI pattern: all state writes before external calls
+- [x] Slippage: revert if output < `minAmountOut`
+- [x] Minimum liquidity lock (1000 wei) on first `addLiquidity`
 
-- [ ] Written and compiling.
+- [x] Written and compiling.
 
 ### 2.2 `AMMFactory.sol`
 **File:** `contracts/src/amm/AMMFactory.sol`
@@ -212,11 +212,11 @@ function getAmountOutAssembly(uint256 rIn, uint256 rOut, uint256 aIn)
 - Mapping `getPair[t0][t1]` → pair address
 - Emits `PairCreated(address token0, address token1, address pair, uint256 pairCount)`
 
-- [ ] Written and compiling.
+- [x] Written and compiling.
 - [ ] Commit: `feat(amm): constant-product AMM from scratch with factory + Yul assembly`
 
 ### 2.3 AMM Tests — `test/amm/`
-- [ ] `AMM.t.sol`:
+- [x] `AMM.t.sol`:
   - `testAddLiquidity` — check LP minted, reserves updated
   - `testRemoveLiquidity` — check tokens returned, LP burned
   - `testSwap_zeroForOne` — check amounts, k invariant
@@ -227,7 +227,7 @@ function getAmountOutAssembly(uint256 rIn, uint256 rOut, uint256 aIn)
   - Fuzz: `testFuzz_Swap(uint96 amountIn)` — k never decreases
   - Fuzz: `testFuzz_AddRemoveLiquidity(uint96 a, uint96 b)`
   - Invariant: `invariant_kNeverDecreases` — k post-swap ≥ k pre-swap
-- [ ] `AMMFactory.t.sol` — CREATE vs CREATE2, pair uniqueness
+- [x] `AMMFactory.t.sol` — CREATE vs CREATE2, pair uniqueness
 - [ ] Commit: `test(amm): full unit + fuzz + invariant AMM tests`
 
 ---
@@ -265,13 +265,13 @@ contract LendingPoolV1 is UUPSUpgradeable, OwnableUpgradeable {
     function _authorizeUpgrade(address) internal override onlyOwner {}
 }
 ```
-- [ ] `LendingPoolV1.sol` written.
-- [ ] `LendingPoolV2.sol` — adds a new feature (e.g., flash loans stub or per-asset LTV). Must demonstrate V1→V2 upgrade path in test.
+- [x] `LendingPoolV1.sol` written.
+- [x] `LendingPoolV2.sol` — adds a new feature (e.g., flash loans stub or per-asset LTV). Must demonstrate V1→V2 upgrade path in test.
 
 ### 3.2 Lending Tests — `test/lending/`
-- [ ] ≥15 unit tests: deposit, borrow, repay, liquidation trigger, health factor math, interest accrual
-- [ ] Fuzz: `testFuzz_HealthFactor(uint96 collateral, uint96 debt)`
-- [ ] Upgrade test: deploy V1 proxy → upgrade to V2 → verify storage preserved
+- [x] ≥15 unit tests: deposit, borrow, repay, liquidation trigger, health factor math, interest accrual
+- [x] Fuzz: `testFuzz_HealthFactor(uint96 collateral, uint96 debt)`
+- [x] Upgrade test: deploy V1 proxy → upgrade to V2 → verify storage preserved
 - [ ] Commit: `feat(lending): UUPS lending pool V1+V2 with upgrade path`
 
 ---
