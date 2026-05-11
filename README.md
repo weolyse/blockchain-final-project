@@ -5,3 +5,7 @@ Final project scaffold for a DeFi super-app: AMM, lending pool, ERC-4626 vault, 
 ## Status
 
 Implementation is in progress. See `BChT2_Implementation_Plan.md` for the full checklist.
+
+# Collaborators
+Abdunur Amangeldiev
+Kasymov Abilmansur
