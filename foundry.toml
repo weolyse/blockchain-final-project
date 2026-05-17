@@ -1,0 +1,18 @@
+[profile.default]
+src = "contracts/src"
+out = "contracts/out"
+libs = ["contracts/lib"]
+solc = "0.8.24"
+optimizer = true
+optimizer_runs = 200
+evm_version = "cancun"
+remappings = [
+    "@openzeppelin/contracts/=contracts/lib/openzeppelin-contracts/contracts/",
+    "@openzeppelin/contracts-upgradeable/=contracts/lib/openzeppelin-contracts-upgradeable/contracts/",
+    "@chainlink/contracts/=contracts/lib/chainlink-brownie-contracts/contracts/",
+    "solmate/=contracts/lib/solmate/src/",
+    "forge-std/=contracts/lib/forge-std/src/"
+]
+fs_permissions = [{ access = "read-write", path = "deployments" }]
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

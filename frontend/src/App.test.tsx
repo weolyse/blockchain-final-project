@@ -1,9 +1,9 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import App from "./App";
+import { pretty, toAmount } from "./utils/format";
 
-test("renders learn react link", () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test("parses decimal token amounts", () => {
+  expect(toAmount("1.5")).toBe(1500000000000000000n);
+});
+
+test("formats bigint token amounts", () => {
+  expect(pretty(1234567890000000000n)).toBe("1.2345");
 });

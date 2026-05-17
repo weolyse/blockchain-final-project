@@ -1,0 +1,9 @@
+Post-deployment verification passed
+chainId: 421614
+lendingPool.owner: 0xa274d612706fC4B5363Db7F9949C8Dd77e5Fa5Fc
+vault.owner: 0xa274d612706fC4B5363Db7F9949C8Dd77e5Fa5Fc
+treasury.owner: 0xa274d612706fC4B5363Db7F9949C8Dd77e5Fa5Fc
+timelock.minDelay: 172800
+governor.votingDelay: 86400
+governor.votingPeriod: 604800
+governor.quorumNumerator: 4

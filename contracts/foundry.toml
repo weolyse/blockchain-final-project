@@ -13,5 +13,6 @@ remappings = [
     "solmate/=lib/solmate/src/",
     "forge-std/=lib/forge-std/src/"
 ]
+fs_permissions = [{ access = "read-write", path = "../deployments" }]
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

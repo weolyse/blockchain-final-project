@@ -2,8 +2,11 @@
 contracts/cache/
 contracts/out/
 contracts/broadcast/
+broadcast/
+cache/Deploy.s.sol/
 contracts/lcov.info
 contracts/coverage-html/
+subgraph/build/
 
 # Node
 node_modules/
@@ -29,4 +32,3 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
