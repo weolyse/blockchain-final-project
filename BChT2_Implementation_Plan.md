@@ -488,7 +488,7 @@ forge script contracts/script/Deploy.s.sol \
   --etherscan-api-key $ARBISCAN_API_KEY
 ```
 - [ ] All contracts verified on Arbiscan.
-- [ ] Addresses saved to `deployments/arbitrum-sepolia.json`.
+- [x] Addresses saved to `deployments/421614.json` (Arbitrum Sepolia).
 - [ ] Links added to `README.md`.
 
 ### 8.3 Post-Deployment Verification Script — `contracts/script/Verify.s.sol`
@@ -562,15 +562,16 @@ type VaultDeposit @entity {
   timestamp: BigInt!
 }
 ```
+- [x] Schema implemented with Swap, LiquidityPosition, Proposal, VaultDeposit, and supporting entities.
 
 ### 9.2 `subgraph/subgraph.yaml`
-- Data sources: AMM pair, Governor, YieldVault
-- Event handlers for: `Swap`, `LiquidityAdded`, `LiquidityRemoved`, `ProposalCreated`, `VoteCast`, `ProposalExecuted`, `Deposit`, `Withdraw`
+- [x] Data sources: AMM pair, Governor, YieldVault
+- [x] Event handlers for: `Swap`, `LiquidityAdded`, `LiquidityRemoved`, `ProposalCreated`, `VoteCast`, `ProposalExecuted`, `Deposit`, `Withdraw`
 
 ### 9.3 `subgraph/src/mappings/`
-- `amm.ts` — handles AMM events
-- `governor.ts` — handles governance events
-- `vault.ts` — handles vault events
+- [x] `amm.ts` — handles AMM events
+- [x] `governor.ts` — handles governance events
+- [x] `vault.ts` — handles vault events
 
 ### 9.4 Deploy Subgraph
 ```bash
@@ -579,8 +580,8 @@ graph auth --studio <deploy-key>
 graph codegen && graph build
 graph deploy --studio defi-super-app
 ```
-- [ ] Subgraph deployed and live.
-- [ ] Subgraph URL added to README.
+- [x] Subgraph deployed and live.
+- [x] Subgraph URL added to README.
 
 ### 9.5 Document 5 GraphQL Queries in `docs/subgraph-queries.md`
 ```graphql
@@ -619,6 +620,7 @@ query DailySwapVolume($since: BigInt!) {
   }
 }
 ```
+- [x] `docs/subgraph-queries.md` written with 5 GraphQL queries.
 - [ ] Commit: `feat(subgraph): schema, mappings, 5 documented GraphQL queries`
 
 ---
@@ -652,13 +654,13 @@ frontend/src/
 ```
 
 ### 10.2 Mandatory UI Features (checklist)
-- [ ] **Wallet connection** — RainbowKit with MetaMask + WalletConnect
-- [ ] **Network detection** — if `chainId !== arbitrumSepolia.id`, show banner with `switchNetwork()` button
-- [ ] **Token balance display** — GovToken balance, voting power, delegate address
-- [ ] **AMM Swap page** — input token amount, show expected output, submit tx
-- [ ] **Vault Deposit/Withdraw page** — show shares balance, APY estimate
-- [ ] **Governance page** — fetch proposals FROM SUBGRAPH (not contract directly), show state badge, vote FOR/AGAINST/ABSTAIN buttons
-- [ ] **Error handling** — wrap all `writeContract` calls in try/catch, display `toast` with readable message for: user rejection, wrong network, insufficient balance, contract revert with reason
+- [x] **Wallet connection** — RainbowKit with MetaMask + WalletConnect
+- [x] **Network detection** — if `chainId !== arbitrumSepolia.id`, show banner with `switchNetwork()` button
+- [x] **Token balance display** — GovToken balance, voting power, delegate address
+- [x] **AMM Swap page** — input token amount, show expected output, submit tx
+- [x] **Vault Deposit/Withdraw page** — show shares balance, APY estimate
+- [x] **Governance page** — fetch proposals FROM SUBGRAPH (not contract directly), show state badge, vote FOR/AGAINST/ABSTAIN buttons
+- [x] **Error handling** — wrap all `writeContract` calls in try/catch, display `toast` with readable message for: user rejection, wrong network, insufficient balance, contract revert with reason
 
 ### 10.3 Error Handling Pattern
 ```typescript
@@ -674,8 +676,8 @@ const handleSwap = async () => {
 };
 ```
 
-- [ ] At least **3 write transactions** callable from UI: swap, vault deposit, castVote.
-- [ ] At least **1 page reads from subgraph** (Governance page).
+- [x] At least **3 write transactions** callable from UI: swap, vault deposit, castVote.
+- [x] At least **1 page reads from subgraph** (Governance page).
 - [ ] Commit: `feat(frontend): full dApp with wallet, swap, vault, governance pages`
 
 ---
@@ -864,19 +866,19 @@ Must contain:
 
 ### Frontend
 - [ ] Wallet connect (MetaMask + WalletConnect)
-- [ ] Wrong network detection + switch prompt
-- [ ] Token balance, voting power, delegate address displayed
-- [ ] AMM swap write transaction
-- [ ] Vault deposit write transaction
-- [ ] castVote write transaction
-- [ ] Proposals fetched from The Graph (not from contract)
+- [x] Wrong network detection + switch prompt
+- [x] Token balance, voting power, delegate address displayed
+- [x] AMM swap write transaction
+- [x] Vault deposit write transaction
+- [x] castVote write transaction
+- [x] Proposals fetched from The Graph (not from contract)
 - [ ] Readable error messages for all failure modes
 
 ### DevOps
 - [ ] GitHub Actions CI: compile + test + coverage + Slither on every push
 - [ ] Pre-commit hook: `forge fmt --check` + Prettier
 - [ ] Deploy script idempotent, parameterized, no manual steps
-- [ ] Post-deployment verification script output committed
+- [x] Post-deployment verification script output committed
 - [ ] All contract addresses verified on L2 block explorer
 
 ### Documentation

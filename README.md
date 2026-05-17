@@ -66,6 +66,9 @@ forge script contracts/script/Verify.s.sol:Verify `
 
 The verification script writes `deployments/verification-output.txt`.
 
+# Deploy Subgraph
+Development Query URL v0.0.1 - https://api.studio.thegraph.com/query/1753435/defi-super-app/version/latest
+
 # Collaborators
 Abdunur Amangeldiev
 Kasymov Abilmansur
