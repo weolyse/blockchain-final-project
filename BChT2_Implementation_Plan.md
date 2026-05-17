@@ -327,20 +327,20 @@ contract PriceFeedAdapter {
     }
 }
 ```
-- [ ] Interface abstraction: `IOracleAdapter` separates the Chainlink-specific impl.
-- [ ] Written and compiling.
+- [x] Interface abstraction: `IOracleAdapter` separates the Chainlink-specific impl.
+- [x] Written and compiling.
 
 ### 5.2 Mock Aggregator — `MockAggregator.sol`
 **File:** `contracts/test/mocks/MockAggregator.sol`
 - Settable price, decimals, updatedAt
 - `setPrice(int256 price)` for test manipulation
 - `setStaleness(uint256 ts)` for staleness tests
-- [ ] Written.
+- [x] Written.
 
 ### 5.3 Oracle Tests
-- [ ] `testStalePriceReverts` — set updatedAt to now - 7200, expect revert
-- [ ] `testNegativePriceReverts`
-- [ ] Fork test: `testFork_ChainlinkETHUSD` — uses real Arbitrum Sepolia feed
+- [x] `testStalePriceReverts` — set updatedAt to now - 7200, expect revert
+- [x] `testNegativePriceReverts`
+- [x] Fork test: `testFork_ChainlinkETHUSD` — uses real Arbitrum Sepolia feed
 - [ ] Commit: `feat(oracle): Chainlink price feed adapter + staleness check + mock`
 
 ---
@@ -399,11 +399,11 @@ End-to-end lifecycle test (critical):
 9. Execute
 10. Assert parameter changed
 ```
-- [ ] `testGovernanceLifecycle_FullE2E` — complete flow above
-- [ ] `testProposalThreshold_Reverts` — insufficient voting power
-- [ ] `testQuorum_Defeated` — not enough votes
-- [ ] `testTimelockDelay_Enforced`
-- [ ] Fuzz: `testFuzz_VotingPower(uint96 amount)`
+- [x] `testGovernanceLifecycle_FullE2E` — complete flow above
+- [x] `testProposalThreshold_Reverts` — insufficient voting power
+- [x] `testQuorum_Defeated` — not enough votes
+- [x] `testTimelockDelay_Enforced`
+- [x] Fuzz: `testFuzz_VotingPower(uint96 amount)`
 - [ ] Commit: `feat(governor): OZ Governor + TimelockController + full lifecycle test`
 
 ---
@@ -412,14 +412,14 @@ End-to-end lifecycle test (critical):
 **Commit prefix:** `fix(security):` or `feat(security):`
 
 ### 7.1 Reentrancy Case Study
-- [ ] Write `contracts/test/security/ReentrancyAttack.t.sol`
+- [x] Write `contracts/test/security/ReentrancyAttack.t.sol`
   - Deploy a malicious contract that calls back into `swap()` or `withdraw()`
   - Show it succeeds WITHOUT `nonReentrant` (comment out guard temporarily)
   - Show it fails WITH `nonReentrant`
   - Commit: `fix(security): demonstrate + fix reentrancy in AMM swap`
 
 ### 7.2 Access Control Case Study
-- [ ] Write `contracts/test/security/AccessControlAttack.t.sol`
+- [x] Write `contracts/test/security/AccessControlAttack.t.sol`
   - Show unauthorized mint succeeds WITHOUT role check
   - Show it reverts WITH `onlyRole(MINTER_ROLE)`
   - Commit: `fix(security): demonstrate + fix unguarded mint access control`
@@ -475,8 +475,8 @@ Full ordered deployment:
 20. Write deployed addresses to deployments/arbitrum-sepolia.json
 ```
 
-- [ ] Script is idempotent: checks `deployments/<chainId>.json` before redeploying.
-- [ ] Script parameterized by environment variables: `DEPLOYER_KEY`, `RPC_URL`.
+- [x] Script is idempotent: checks `deployments/<chainId>.json` before redeploying.
+- [x] Script parameterized by environment variables: `DEPLOYER_KEY`, `RPC_URL`.
 
 ### 8.2 Deploy to Arbitrum Sepolia
 ```bash
@@ -493,12 +493,12 @@ forge script contracts/script/Deploy.s.sol \
 
 ### 8.3 Post-Deployment Verification Script — `contracts/script/Verify.s.sol`
 Checks:
-- [ ] `lendingPool.owner() == timelock address`
-- [ ] `timelock.getMinDelay() == 2 days`
-- [ ] `governor.votingDelay() == 1 day`
-- [ ] `governor.votingPeriod() == 7 days`
-- [ ] `governor.quorumNumerator() == 4`
-- [ ] Output saved to `deployments/verification-output.txt`
+- [x] `lendingPool.owner() == timelock address`
+- [x] `timelock.getMinDelay() == 2 days`
+- [x] `governor.votingDelay() == 1 day`
+- [x] `governor.votingPeriod() == 7 days`
+- [x] `governor.quorumNumerator() == 4`
+- [x] Output saved to `deployments/verification-output.txt`
 
 ### 8.4 Gas Comparison Table
 Measure on both Goerli (L1 simulation) and Arbitrum Sepolia. Add to `docs/gas-report.md`:
@@ -690,19 +690,19 @@ const handleSwap = async () => {
 | Fuzz tests | ≥10 | |
 | Invariant tests | ≥5 | |
 | Fork tests | ≥3 | |
-| **Total** | **≥80** | |
+| **Total** | **≥80** | 92 |
 
 ### 11.2 Required Fuzz Tests (verify each exists)
-- [ ] `testFuzz_Swap(uint96 amountIn)` in `AMM.t.sol`
-- [ ] `testFuzz_AddRemoveLiquidity(uint96 a, uint96 b)` in `AMM.t.sol`
-- [ ] `testFuzz_VaultDepositWithdraw(uint96 assets)` in `YieldVault.t.sol`
-- [ ] `testFuzz_VaultInflationAttack(uint96 frontrun)` in `YieldVault.t.sol`
-- [ ] `testFuzz_HealthFactor(uint96 collateral, uint96 debt)` in `LendingPool.t.sol`
-- [ ] `testFuzz_VotingPower(uint96 amount)` in `Governor.t.sol`
-- [ ] `testFuzz_GovTokenDelegate(address delegatee)` in `GovToken.t.sol`
-- [ ] `testFuzz_PriceFeed(int256 price, uint256 age)` in `Oracle.t.sol`
-- [ ] `testFuzz_LPMint(uint96 a, uint96 b, uint96 c)` in `AMM.t.sol`
-- [ ] `testFuzz_RepayInterest(uint96 principal, uint256 time)` in `LendingPool.t.sol`
+- [x] `testFuzz_Swap(uint96 amountIn)` in `AMM.t.sol`
+- [x] `testFuzz_AddRemoveLiquidity(uint96 a, uint96 b)` in `AMM.t.sol`
+- [x] `testFuzz_VaultDepositWithdraw(uint96 assets)` in `YieldVault.t.sol`
+- [x] `testFuzz_VaultInflationAttack(uint96 frontrun)` in `YieldVault.t.sol`
+- [x] `testFuzz_HealthFactor(uint96 collateral, uint96 debt)` in `LendingPool.t.sol`
+- [x] `testFuzz_VotingPower(uint96 amount)` in `Governor.t.sol`
+- [x] `testFuzz_GovTokenDelegate(address delegatee)` in `GovToken.t.sol`
+- [x] `testFuzz_PriceFeed(int256 price, uint256 age)` in `Oracle.t.sol`
+- [x] `testFuzz_LPMint(uint96 a, uint96 b, uint96 c)` in `AMM.t.sol`
+- [x] `testFuzz_RepayInterest(uint96 principal, uint256 time)` in `LendingPool.t.sol`
 
 ### 11.3 Required Invariant Tests
 - [ ] `invariant_kNeverDecreases` — `reserve0 * reserve1 >= k_before` after any swap

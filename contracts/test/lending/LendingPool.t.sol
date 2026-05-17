@@ -180,6 +180,29 @@ contract LendingPoolTest is Test {
         assertEq(debtWithInterest, 0);
     }
 
+    function testFuzz_RepayInterest(uint96 principal, uint256 timeElapsed) public {
+        principal = uint96(bound(principal, 1e18, 10_000e18));
+        timeElapsed = bound(timeElapsed, 1, 730 days);
+
+        _openHealthyBorrow(principal);
+        vm.warp(block.timestamp + timeElapsed);
+
+        (,, uint256 debtBefore,) = pool.positionOf(borrower, address(usdc));
+        assertGe(debtBefore, principal);
+
+        usdc.mint(borrower, debtBefore);
+
+        vm.prank(borrower);
+        usdc.approve(address(pool), type(uint256).max);
+
+        vm.prank(borrower);
+        uint256 repaid = pool.repay(address(usdc), debtBefore);
+
+        (,, uint256 debtAfter,) = pool.positionOf(borrower, address(usdc));
+        assertEq(repaid, debtBefore);
+        assertEq(debtAfter, 0);
+    }
+
     function testInterestAccruesLinearly() public {
         _openHealthyBorrow(5_000e18);
         vm.warp(block.timestamp + 365 days);
