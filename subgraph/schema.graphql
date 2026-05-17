@@ -1,3 +1,83 @@
-type Placeholder @entity {
+type Swap @entity(immutable: true) {
   id: ID!
+  pair: Bytes!
+  sender: Bytes!
+  tokenIn: Bytes!
+  amountIn: BigInt!
+  amountOut: BigInt!
+  to: Bytes!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+
+type LiquidityPosition @entity(immutable: false) {
+  id: ID!
+  user: Bytes!
+  pair: Bytes!
+  lpBalance: BigInt!
+  lastUpdated: BigInt!
+}
+
+type LiquidityEvent @entity(immutable: true) {
+  id: ID!
+  pair: Bytes!
+  provider: Bytes!
+  amount0: BigInt!
+  amount1: BigInt!
+  liquidity: BigInt!
+  action: String!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+
+type Proposal @entity(immutable: false) {
+  id: ID!
+  proposalId: BigInt!
+  proposer: Bytes!
+  description: String!
+  state: String!
+  forVotes: BigInt!
+  againstVotes: BigInt!
+  abstainVotes: BigInt!
+  startBlock: BigInt!
+  endBlock: BigInt!
+  createdAt: BigInt!
+  executedAt: BigInt
+}
+
+type Vote @entity(immutable: true) {
+  id: ID!
+  proposal: Proposal!
+  voter: Bytes!
+  support: Int!
+  weight: BigInt!
+  reason: String!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+
+type VaultDeposit @entity(immutable: true) {
+  id: ID!
+  depositor: Bytes!
+  owner: Bytes!
+  assets: BigInt!
+  shares: BigInt!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+
+type VaultWithdraw @entity(immutable: true) {
+  id: ID!
+  sender: Bytes!
+  receiver: Bytes!
+  owner: Bytes!
+  assets: BigInt!
+  shares: BigInt!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
 }

@@ -1,4 +1,80 @@
 specVersion: 0.0.8
 schema:
   file: ./schema.graphql
-dataSources: []
+dataSources:
+  - kind: ethereum
+    name: ConstantProductAMM
+    network: arbitrum-sepolia
+    source:
+      address: "0xa1Da546c5e942DcEB2554C47b8f1FFbF68EB349E"
+      abi: ConstantProductAMM
+      startBlock: 269123127
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Swap
+        - LiquidityPosition
+        - LiquidityEvent
+      abis:
+        - name: ConstantProductAMM
+          file: ./abis/ConstantProductAMM.json
+      eventHandlers:
+        - event: Swap(indexed address,indexed address,uint256,uint256,indexed address)
+          handler: handleSwap
+        - event: LiquidityAdded(indexed address,uint256,uint256,uint256)
+          handler: handleLiquidityAdded
+        - event: LiquidityRemoved(indexed address,uint256,uint256,uint256)
+          handler: handleLiquidityRemoved
+      file: ./src/amm.ts
+  - kind: ethereum
+    name: DeFiGovernor
+    network: arbitrum-sepolia
+    source:
+      address: "0x6838ce5AAb674eDfcFD4b74E8afaF5744dF5768F"
+      abi: DeFiGovernor
+      startBlock: 269123132
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Proposal
+        - Vote
+      abis:
+        - name: DeFiGovernor
+          file: ./abis/DeFiGovernor.json
+      eventHandlers:
+        - event: ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)
+          handler: handleProposalCreated
+        - event: VoteCast(indexed address,uint256,uint8,uint256,string)
+          handler: handleVoteCast
+        - event: ProposalExecuted(uint256)
+          handler: handleProposalExecuted
+        - event: ProposalCanceled(uint256)
+          handler: handleProposalCanceled
+      file: ./src/governor.ts
+  - kind: ethereum
+    name: YieldVault
+    network: arbitrum-sepolia
+    source:
+      address: "0xE97d8038bA22e96Ca37cCcBf70a52598f6776F6F"
+      abi: YieldVault
+      startBlock: 269123127
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - VaultDeposit
+        - VaultWithdraw
+      abis:
+        - name: YieldVault
+          file: ./abis/YieldVault.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed address,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleWithdraw
+      file: ./src/vault.ts
