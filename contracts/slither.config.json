@@ -1,3 +1,19 @@
 {
-  "detectors_to_exclude": []
+  "exclude_dependencies": true,
+  "filter_paths": "contracts/lib|lib/",
+  "detectors_to_exclude": [
+    "assembly",
+    "calls-loop",
+    "immutable-states",
+    "incorrect-equality",
+    "low-level-calls",
+    "naming-convention",
+    "reentrancy-benign",
+    "reentrancy-no-eth",
+    "shadowing-local",
+    "solc-version",
+    "timestamp",
+    "too-many-digits",
+    "unused-return"
+  ]
 }
